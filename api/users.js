@@ -47,10 +47,10 @@ router.post(
       if (!match) return res.status(400).send("Invalid credentials");
 
       const token = createToken(user.id);
-      res.json({ token });
+      res.json({ token, user: { id: user.id, username: user.username } });
     } catch (err) {
       console.error(err);
-      res.status(400).send(err.message);
+      res.status(500).send(err.message);
     }
   }
 );

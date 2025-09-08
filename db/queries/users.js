@@ -1,6 +1,17 @@
 import db from "#db/client";
 
 // Create a new user (password should already be hashed before calling this)
+export async function createUser(username, password) {
+  const sql = `
+    INSERT INTO users (username, password)
+    VALUES ($1, $2)
+    RETURNING *
+  `;
+  const {
+    rows: [user],
+  } = await db.query(sql, [username, password]);
+  return user;
+}
 export async function register(username, password) {
   const SQL = `
     INSERT INTO users (username, password)
