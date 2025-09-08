@@ -11,17 +11,6 @@ export async function register(username, password) {
   return rows[0];
 }
 
-export async function getAboutMe(id) {
-  const SQL = `
-        SELECT * FROM users where id = $1;
-    `;
-  const { rows } = await db.query(SQL, [id]);
-  console.log("rows");
-  console.log(rows);
-  console.log("rows");
-  return rows[0];
-}
-
 // Find a user by username
 export async function getUserByUsername(username) {
   const SQL = `
@@ -50,4 +39,11 @@ export async function login(username) {
     `;
   const { rows } = await db.query(SQL, [username]);
   return rows[0];
+}
+
+export async function getAboutMe(id) {
+  const {
+    rows: [row],
+  } = await db.query(`SELECT id, username FROM users WHERE id = $1`, [id]);
+  return row;
 }

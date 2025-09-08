@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const SECRET = process.env.JWT_SECRET;
+const SECRET = process.env.JWT_SECRET || "12345";
 
 /** Creates a token with the given payload */
 export function createToken(payload) {
@@ -9,5 +9,10 @@ export function createToken(payload) {
 
 /** Extracts the payload from a token */
 export function verifyToken(token) {
-  return jwt.verify(token, SECRET);
+  try {
+    return jwt.verify(token, SECRET);
+  } catch (err) {
+    // You can throw or return null to handle it in your middleware
+    return null;
+  }
 }
